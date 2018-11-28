@@ -1,0 +1,88 @@
+## The program takes inputs from the user to compute volumes of various shapes and keeps track of all the prompts.
+# At the end it displays all of the computed volumes
+
+# Imports volume file, to compute all volume calculations
+import volumes
+
+# Initializes the lists as well as assigns a value for a boolean expression
+validity = True
+cube_List = []
+pyramid_List = []
+ellipsoid_List = []
+
+# A while loop begins and will continue to loop until the statement changes to false
+while validity == True:
+# Prompts the user for the shape
+    shape = (input("Please Enter Which Shape You Would Like To Compute The Volume For (Cube, Pyramid, Ellipsoid or Quit) "))
+
+# If the user prompt is cube, it checks the prompt, computes the volume by accessing the volume program and adds the volume to the cube list and begins to sort them
+    if shape.lower() == "cube" or shape.lower() == "c":
+        cube_Length = float(input("Please Enter A Cube Side Length "))
+        cube_Volume = volumes.cubeVolume(cube_Length)
+        cube_List.append(cube_Volume)
+        cube_List.sort()
+
+# If the user prompt is pyramid, it checks the prompt, computes the volume by accessing the volume program and adds the volume to the pyramid list and begins to sort them
+    elif shape.lower() == "pyramid" or shape.lower() == "p":
+        pyramid_Base = float(input("Please Enter A Pyramid Base Value "))
+        pyramid_Height = float(input("Please Enter A Pyramid Height Value "))
+        pyramid_Volume = volumes.pyramidVolume(pyramid_Base, pyramid_Height)
+        pyramid_List.append(pyramid_Volume)
+        pyramid_List.sort()
+
+# If the user prompt is ellipsoid, it checks the prompt, computes the volume by accessing the volume program and adds the volume to the ellipsoid list and begins to sort them
+    elif shape.lower() == "ellipsoid" or shape.lower() == "e":
+        ellipsoid_R1 = float(input("Please Enter A Radius 1 Value "))
+        ellipsoid_R2 = float(input("Please Enter A Radius 2 Value "))
+        ellipsoid_R3 = float(input("Please Enter A Radius 3 Value "))
+        ellipsoid_Volume = volumes.ellipsoidVolume(ellipsoid_R1, ellipsoid_R2, ellipsoid_R3)
+        ellipsoid_List.append(ellipsoid_Volume)
+        ellipsoid_List.sort()
+
+# If the prompt is quit, it checks the prompt and changes the validity statement, so that it can exit the loop
+    elif shape.lower() == "quit" or shape.lower() == "q":
+        validity = False
+
+# If the prompts is none of the choices, it checks all the conditions above and then prints an invalid statement
+    else:
+        print("Enter A Valid Option")
+
+# If the user chooses to quit at the start, it computes it by checking the list length and then prints a statement
+if len(cube_List) == 0 and len(pyramid_List) == 0 and len(ellipsoid_List) == 0:
+    print("You Have Reached the End of Your Session")
+    print("You Did Not Perform Any Volume Calculations")
+
+# If the user has computed values and quits, it prints all the volumes in the list
+else:
+    print("You Have Reached the End of Your Session")
+    print("The Volumes Calculated for Each Shape Are: ")
+
+# Checks if list length is greater than 0 and if it is, prints volumes in the list
+    if len(cube_List) > 0:
+        string_List = [str(a) for a in cube_List]
+        print("Cube:", ", " . join(string_List))
+        print("")
+# Prints statement if no values in list
+    else:
+        print("No Shapes Entered for Cube")
+        print("")
+
+# Checks if list length is greater than 0 and if it is, prints volumes in the list
+    if len(pyramid_List) > 0:
+        string_List = [str(a) for a in pyramid_List]
+        print("Pyramid:", ", " . join(string_List))
+        print("")
+# Prints statement if no values in list
+    else:
+        print("No Shapes Entered for Pyramid")
+        print("")
+
+# Checks if list length is greater than 0 and if it is, prints volumes in the list
+    if len(ellipsoid_List) > 0:
+        string_List = [str(a) for a in ellipsoid_List]
+        print("Ellipsoid:", ", " . join(string_List))
+        print("")
+# Prints statement if no values in list
+    else:
+        print("No Shapes Entered for Ellipsoid")
+        print("")
