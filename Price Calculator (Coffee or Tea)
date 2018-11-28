@@ -1,0 +1,96 @@
+# The program takes inputs from the user to create a beverage and states its total
+
+# Imports decimal to allow for program to compute two decimal places for cost of drink
+from decimal import Decimal
+
+# Constants and the Price Associated
+TAX = 1.13
+SMALL_PRICE = 1.50
+MEDIUM_PRICE = 2.50
+LARGE_PRICE = 3.25
+VANILLA_COST = 0.25
+CHOCOLATE_COST = 0.75
+LEMON_COST = 0.25
+MINT_COST = 0.50
+NONE_COST = 0.00
+
+# Beginning of Code, Prompt of Name
+name = input("Hello, What is Your Name? ")
+NAME = name.title()
+# Checks if the name is only alphabets and no space, number or special charaters. Otherwise provides error and exits.
+if name.isalpha() == False:
+    print("Error in the Name (Space, Number and/or Special Character is Present)")
+    exit()
+
+# if it doesn't meet the if statement conditions. It continues program and prompts for the drink choice.
+else:
+    drink = input("Hello " + name.title() +", Would You Like a Coffee or Tea, Today? ")
+
+# Checks if the choice is the correct answer and then prompts for size
+if drink.lower() == "coffee" or drink.lower() == "c" or drink.lower() == "tea" or drink.lower() == "t":
+    sizeDrink = input ("What Size Would You Like? ")
+
+# Checks the size input and associates a cost with the size
+    if sizeDrink.lower() == "small" or sizeDrink.lower() == "s":
+        drinkPrice = SMALL_PRICE
+        drinkSize = "Small"
+    elif sizeDrink.lower() == "medium" or sizeDrink.lower() == "m":
+        drinkPrice = MEDIUM_PRICE
+        drinkSize = "Medium"
+    elif sizeDrink.lower() == "large" or sizeDrink.lower() == "l":
+        drinkPrice = LARGE_PRICE
+        drinkSize = "Large"
+# If the input is invalid, it provides an error prompt
+    else:
+        print("Error in Size Response (Invalid Size).")
+        exit()
+
+# If choice is coffee, prompts coffee flavouring
+    if drink.lower() == "coffee" or drink.lower() == "c":
+        drinkChoice = "Coffee"
+        coffeeFlavour = input("What Flavour Would You Like? (Flavours Available: None, Vanilla and Chocolate) ")
+# Checks the flavour input and associates a cost with the flavour input
+        if coffeeFlavour.lower() == "chocolate" or coffeeFlavour.lower() == "c":
+            flavourCost = CHOCOLATE_COST
+            flavourChoice = "Chocolate"
+        elif coffeeFlavour.lower() == "vanilla" or coffeeFlavour.lower() == "v":
+            flavourCost = VANILLA_COST
+            flavourChoice = "Vanilla"
+        elif coffeeFlavour.lower() == "none" or coffeeFlavour.lower() == "":
+            flavourCost = NONE_COST
+            flavourChoice = "None"
+# if the input is invalid, it provides an error prompt
+        else:
+            print("Error in Flavour Response (Invalid Flavour).")
+            exit()
+
+# If choice is tea, prompts tea flavouring
+    if drink.lower() == "tea" or drink.lower() == "t":
+        drinkChoice = "Tea"
+        teaFlavour = input("What Flavour Would You Like? (Flavours Available: None, Lemon and Mint) ")
+# Checks the flavour input and associates a cost with the flavour input
+        if teaFlavour.lower() == "lemon" or teaFlavour.lower() == "l":
+            flavourCost = LEMON_COST
+            flavourChoice = "Lemon"
+        elif teaFlavour.lower() == "mint" or teaFlavour.lower() == "m":
+            flavourCost = MINT_COST
+            flavourChoice = "Mint"
+        elif teaFlavour.lower() == "none" or teaFlavour.lower() == "":
+            flavourCost = NONE_COST
+            flavourChoice = "None"
+# if the input is invalid, it provides an error prompt
+        else:
+            print("Error in Flavour Response (Invalid Flavour).")
+            exit()
+
+
+# if the drink input is invalid, it provides an error prompt
+else:
+        print("Error in Drink Response (Invalid Drink).")
+        exit()
+
+# Calculates the drink size cost and adds the flavour cost, while adding tax to it
+# Prints the drink order with the total cost of the drink, rounded to two decimal points for most reliable cash value
+total = (drinkPrice + flavourCost)* TAX
+output = round(total,2)
+print("For " + NAME + ", a " + drinkSize + " " + drinkChoice + ", with Flavour Choice of: " + flavourChoice+ ". Your Total is: $" +str(output))
