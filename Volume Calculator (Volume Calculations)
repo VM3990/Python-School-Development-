@@ -1,0 +1,23 @@
+# The program takes inputs from the user to compute volumes of various shapes and keeps track of all the prompts.
+# At the end it displays all of the computed volumes
+
+# Imports math function to compute values of pi and round decimals
+import math
+
+# Defines cube volume by stating formula and computing value as well as statement. Then rounds response.
+def cubeVolume(side):
+    cube_Volume = side**3
+    volume_Response = print("The volume of a Cube with a length of a side " + str(side) + " is: " + str(round(cube_Volume, 1)))
+    return round(cube_Volume, 3)
+
+# Defines pyramid volume by stating formula and computing value as well as statement. Then rounds response.
+def pyramidVolume(base, height):
+    pyramid_Volume = 1/3*(base**2) * height
+    volume_Response = print("The volume of a Pyramid with a base " + str(base) + " and height " + str(height) + " is: " + str(round(pyramid_Volume,1)))
+    return round(pyramid_Volume,3)
+
+# Defines ellipsoid volume by stating formula and computing value as well as statement. Then rounds response.
+def ellipsoidVolume(r1,r2,r3):
+    ellipsoid_Volume = ((4/3)*math.pi)*r1*r2*r3
+    volume_Response = print("The volume of a Ellipsoid with radii of " + str(r1) + " and " + str(r2) +  " and " + str(r3) + " is: " +str(round(ellipsoid_Volume,1)))
+    return round(ellipsoid_Volume,3)
