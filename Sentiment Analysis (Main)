@@ -1,0 +1,22 @@
+# The program takes inputs from the user to open files of tweets and keywords, to calculate the sentiment and the time zone that it originates from.
+
+# Imports the program and calls upon a specific function
+from sentiment_analysis import compute_tweets
+
+# Ask the user for the imput of which files, they want to open
+tweet_fileName = input("Enter The Tweet File Name: ")
+keyword_fileName = input("Enter The Keyword File Name: ")
+
+# Calls upon a specific function from the program to compute the results
+results = compute_tweets(tweet_fileName, keyword_fileName)
+try:
+
+# Prints the results in average score and number of tweets
+    print("The Average Happiness Score in The Eastern Region is: ", results[0][0], ", Based off of The Number of Tweets in The Region, Which Are: ", results[0][1])
+    print("The Average Happiness Score in The Central Region is: ", results[1][0], ", Based off of The Number of Tweets in The Region, Which Are: ", results[1][1])
+    print("The Average Happiness Score in The Mountain Region is: ", results[2][0], ", Based off of The Number of Tweets in The Region, Which Are: ", results[2][1])
+    print("The Average Happiness Score in The Pacific Region is: ", results[3][0], ", Based off of The Number of Tweets in The Region, Which Are: ", results[3][1])
+
+# Prints a statement if there is an index error
+except IndexError:
+    print(results)
