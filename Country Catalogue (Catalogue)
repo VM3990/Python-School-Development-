@@ -1,0 +1,165 @@
+# The program takes inputs from the user to open files of tweets and keywords, to calculate the sentiment and the time zone that it originates from.
+
+# Declare and initialize global variables
+positive = []
+negative = []
+bad = []
+slightly_Neutral = []
+almost_Positive = []
+good = []
+neutral = []
+eastern_Sentiment = []
+central_Sentiment = []
+mountain_Sentiment = []
+pacific_Sentiment = []
+output = []
+PUNC = ".,_:;\"?!$%*[]\'#@/^()"
+
+
+def compute_tweets(tweets, keywords):
+# Trys opening and computing the values, as long as there are no errors within the files
+    try:
+# Clears the list if run continously
+        clean_Lists()
+# Opens and Reads files for computation
+        tweets_Open = open(tweets, "r", encoding="utf‐8")
+        keywords_Open = open(keywords, "r", encoding="utf‐8")
+
+# Loops for each word in the keywords and splits it according to the value it has and saves it into a global list
+        for word in keywords_Open:
+
+# Splits and cleans the words of any punctuation or notations
+            values = word.strip().split(",")
+            emotion = values[0]
+
+# Checks if it is a specific value and adds it to a specific list
+            if values[1] == '10':
+                positive.append(emotion)
+            elif values[1] == '1':
+                negative.append(emotion)
+            elif values[1] == '3':
+                bad.append(emotion)
+            elif values[1] == '4':
+                slightly_Neutral.append(emotion)
+            elif values[1] == '7':
+                good.append(emotion)
+            elif values[1] == '8':
+                almost_Positive.append(emotion)
+            elif values[1] == '5':
+                neutral.append(emotion)
+
+# Call the sentiment_Calculation function and runs it
+        sentiment_Calculations(tweets_Open)
+
+# Calls the region_Total function and runs it for each region
+        region_Total(eastern_Sentiment)
+        region_Total(central_Sentiment)
+        region_Total(mountain_Sentiment)
+        region_Total(pacific_Sentiment)
+
+# Returns the final tuples to the main
+        return output
+
+# If the file is not to be found, it provides this error to the use
+    except IOError:
+        return output
+
+# After running, it will always close the files opened to be read
+    tweets_Open.close()
+    keywords_Open.close()
+
+
+
+# Performs the calculations of sentiment of each tweet
+def sentiment_Calculations(tweets_Open):
+# Reads each line and splits and strips of any notaion. And resets the sentiment and count after each line
+        for line in tweets_Open:
+            value = line.split()
+            sentiment = 0
+            count = 0
+
+# Reads each word in a line and lowers it, as well as strips it of punctuation and compares the words with each keyword and assigns it a sentiment
+            for word in value:
+
+# Lowers and strips the punctuation
+                word = word.lower().strip(".,_:;\"?!$%*&-[]\'#@/^()").strip()
+# Compares each word to a keyword and if found, adds the specific sentiment and adds to the counter of keywords
+                if word in positive:
+                    count = count + 1
+                    sentiment = sentiment + 10
+                elif word in negative:
+                    count = count + 1
+                    sentiment = sentiment + 1
+                elif word in neutral:
+                    count = count + 1
+                    sentiment = sentiment + 5
+                elif word in bad:
+                    count = count + 1
+                    sentiment = sentiment + 3
+                elif word in good:
+                    count = count + 1
+                    sentiment = sentiment + 7
+                elif word in almost_Positive:
+                    count = count + 1
+                    sentiment = sentiment + 8
+                elif word in slightly_Neutral:
+                    count = count + 1
+                    sentiment = sentiment + 4
+
+# If the sentiment is greater than 0, it determines the latitude and longitude and the avergae sentiment in each tweet call upon the timeZone function
+            if sentiment > 0:
+
+# Computes the latitude, longitude, and average sentiment
+                longitude = float(value[0].lstrip(PUNC).rstrip(PUNC))
+                latitude = float(value[1].lstrip(PUNC).rstrip(PUNC))
+                sentiment = sentiment / count
+
+# Calls the timeZone Function
+                timeZone(sentiment, longitude, latitude)
+
+
+
+# Computes what region each tweet belongs to
+def timeZone(sentiment, longitude, latitude):
+# Checks if it is between the boundry
+    if 24.660845 <= longitude <= 49.189787:
+# Assigns it location based on its latitude
+        if -87.518395 <= latitude <= -67.444574:
+            eastern_Sentiment.append(sentiment)
+        elif -101.998892 < latitude <= -87.518395:
+            central_Sentiment.append(sentiment)
+        elif -115.236428 < latitude <= -101.998892:
+            mountain_Sentiment.append(sentiment)
+        elif -125.242264 < latitude <= -115.236428:
+            pacific_Sentiment.append(sentiment)
+
+
+
+# Computes the amount of tweets and the average value of tweets
+def region_Total(sentiment_Value):
+# Checks if length s greater than zero and will compute if it is, while adding the values to the tuple
+    if len(sentiment_Value) > 0:
+        region_TweetAmount = len(sentiment_Value)
+        region_Average = round((sum(sentiment_Value) / region_TweetAmount), 2)
+        output.append((region_Average, region_TweetAmount))
+# Returns (0,0) tuple if the length is zero
+    else:
+        output.append((0,0))
+
+
+
+# Clears the lists everytime, if the function is run more than once like in the driver.py
+def clean_Lists():
+    positive.clear()
+    negative.clear()
+    bad.clear()
+    slightly_Neutral.clear()
+    almost_Positive.clear()
+    good.clear()
+    neutral.clear()
+    eastern_Sentiment.clear()
+    central_Sentiment.clear()
+    mountain_Sentiment.clear()
+    pacific_Sentiment.clear()
+    output.clear()
+
